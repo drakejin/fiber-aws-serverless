@@ -70,7 +70,7 @@ make deploy
 make docs
 
 # tail cloudwatchlogs realtime
-aws logs tail ${cloudwatch-log-group} --follow
+aws logs tail /aws/lambda/fiber-aws-serverless-alpha-api --follow
 
 ```
 
