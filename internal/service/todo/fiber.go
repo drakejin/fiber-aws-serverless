@@ -7,17 +7,9 @@ import (
 	"gorm.io/gorm"
 )
 
-func ParseInFromFiber(ctx *fiber.Ctx) (*In, error) {
+func (s *Service) FiberHandler_PostTodo(ctx *fiber.Ctx) error {
 	in := &In{}
 	err := ctx.BodyParser(in)
-	if err != nil {
-		return nil, err
-	}
-	return in, nil
-}
-
-func (s *Service) FiberHandler_PostTodo(ctx *fiber.Ctx) error {
-	in, err := ParseInFromFiber(ctx)
 	if err != nil {
 		ctx.Status(fiber.StatusBadRequest)
 		return err
@@ -99,7 +91,13 @@ func (s *Service) FiberHandler_GetTodo(ctx *fiber.Ctx) error {
 }
 
 func (s *Service) FiberHandler_PatchTodo(ctx *fiber.Ctx) error {
-	in, err := ParseInFromFiber(ctx)
+	in := &In{}
+	err := ctx.BodyParser(in)
+	if err != nil {
+		ctx.Status(fiber.StatusBadRequest)
+		return err
+	}
+
 	if err != nil {
 		ctx.Status(fiber.StatusBadRequest)
 		return err

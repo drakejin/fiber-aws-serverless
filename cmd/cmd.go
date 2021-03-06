@@ -21,7 +21,7 @@ func Start(cfg *config.Config) error {
 	}
 
 	c.AddCommand(HTTPCommand(cfg))
-	c.AddCommand(GROMCommand(cfg))
+	c.AddCommand(GORMCommand(cfg))
 	return c.Execute()
 }
 
@@ -53,7 +53,7 @@ func HTTPCommand(cfg *config.Config) *cobra.Command {
 	return c
 }
 
-func GROMCommand(cfg *config.Config) *cobra.Command {
+func GORMCommand(cfg *config.Config) *cobra.Command {
 	c := &cobra.Command{
 		Use:     "gorm",
 		Aliases: []string{"g"},
