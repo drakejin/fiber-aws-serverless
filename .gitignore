@@ -1,0 +1,16 @@
+# IntelliJ
+.idea
+out
+
+# environments
+.env
+.envrc
+
+# serverless
+.serverless
+
+# dist
+bin
+
+# docs
+__pycache__

@@ -1,0 +1,40 @@
+# health check
+
+### health check
+GET http://localhost:3000/health
+
+
+### post tood
+POST http://localhost:3000/api/v1/todos
+Content-Type: application/json
+
+{
+  "Todo": {
+    "Name": "hello world",
+    "Type": "study",
+    "Note": "foo bar foo foo",
+    "Sort": 1
+  }
+}
+
+### get todos
+GET http://localhost:3000/api/v1/todos
+
+### get todo
+GET http://localhost:3000/api/v1/todos/b39e5d40-2adc-49b8-871b-1a8a9b0e6b3d
+
+### update todo
+PATCH http://localhost:3000/api/v1/todos/b39e5d40-2adc-49b8-871b-1a8a9b0e6b3d
+Content-Type: application/json
+
+{
+  "Todo": {
+    "Name": "kiiiiimmmmchi",
+    "Type": "study",
+    "Note": "kimchi power",
+    "Sort": 2
+  }
+}
+
+### delete todo
+DELETE http://localhost:3000/api/v1/todos/b39e5d40-2adc-49b8-871b-1a8a9b0e6b3d
