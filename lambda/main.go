@@ -13,11 +13,13 @@ import (
 func main() {
 	cfg, err := config.New(true)
 	if err != nil {
+		log.Error().Err(err).Send()
 		log.Fatal().Err(err).Send()
 	}
 
 	cont, err := container.New(cfg)
 	if err != nil {
+		log.Error().Err(err).Send()
 		log.Fatal().Err(err).Send()
 	}
 

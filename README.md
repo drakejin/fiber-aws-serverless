@@ -65,9 +65,9 @@ aws logs tail ${cloudwatch-log-group} --follow
 
 # API test
 
-see [docs/todo.http](./docs/todo.http)
+see demo [docs/todo.http](./docs/todo.http)
 
-
+https://y6dgbjxz50.execute-api.ap-northeast-2.amazonaws.com/alpha/health
 
 # references
 - documentation tools: [mingrammers/diagrams](https://github.com/mingrammer/diagrams)
