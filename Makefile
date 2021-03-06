@@ -1,10 +1,7 @@
+.PHONY: docs deploy
+
 docs:
 	python3 ./docs/aws_diagram.py
-
-run:
-	# locally run
-	go mod download
-	go run main.go http start
 
 deploy:
 	# deploy server

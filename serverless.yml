@@ -1,0 +1,93 @@
+frameworkVersion: "2"
+
+plugins:
+#  - serverless-domain-manager
+  - serverless-dotenv-plugin
+
+org: gofiber
+service: fiber-aws-serverless
+
+provider:
+  name: aws
+  runtime: go1.x
+  stage: alpha
+  region: ${env:AWS_REGION}
+  deploymentBucket: fiber-aws-serverless
+  lambdaHashingVersion: 20201221
+  apiGateway:
+    shouldStartNameWithService: true
+  logs:
+    http: true
+  useDotenv: true
+  environment:
+    FIBER_APP_APP: ${env.FIBER_APP_APP}
+    FIBER_APP_ENV: ${env.FIBER_APP_ENV}
+    FIBER_APP_DEBUG: ${env.FIBER_APP_DEBUG}
+
+    FIBER_APP_HTTP_SERVER_PORT: ${env.FIBER_APP_HTTP_SERVER_PORT}
+    FIBER_APP_HTTP_SERVER_TIMEOUT: ${env.FIBER_APP_HTTP_SERVER_TIMEOUT}
+
+    FIBER_APP_DB_SERVICE_HOST: ${env.FIBER_APP_DB_SERVICE_HOST}
+    FIBER_APP_DB_SERVICE_PORT: ${env.FIBER_APP_DB_SERVICE_PORT}
+    FIBER_APP_DB_SERVICE_DIALECT: ${env.FIBER_APP_DB_SERVICE_DIALECT}
+    FIBER_APP_DB_SERVICE_SCHEMA: ${env.FIBER_APP_DB_SERVICE_SCHEMA}
+    FIBER_APP_DB_SERVICE_USERNAME: ${env.FIBER_APP_DB_SERVICE_USERNAME}
+    FIBER_APP_DB_SERVICE_PASSWORD: ${env.FIBER_APP_DB_SERVICE_PASSWORD}
+
+
+  iam:
+    role:
+      statements:
+        - Effect: "Allow" # for vpc links
+          Action:
+            - "ec2:CreateNetworkInterface"
+            - "ec2:DescribeNetworkInterfaces"
+            - "ec2:DeleteNetworkInterface"
+            - "ec2:AssignPrivateIpAddresses"
+            - "ec2:UnassignPrivateIpAddresses"
+          Resource: "*"
+
+        - Effect: "Allow" # for x-ray
+          Action:
+            - "xray:PutTraceSegments"
+            - "xray:PutTelemetryRecords"
+            - "xray:GetSamplingRules"
+            - "xray:GetSamplingTargets"
+            - "xray:GetSamplingStatisticSummaries"
+          Resource: "*"
+
+        - Effect: "Allow" # for logs to cloudwatch
+          Action:
+            - "logs:CreateLogGroup"
+            - "logs:CreateLogStream"
+            - "logs:PutLogEvents"
+          Resource: "*"
+
+
+        - Effect: "Allow" # for aws get object
+          Action:
+            - "s3:GetObject"
+          Resource: "*"
+
+package:
+  include:
+    - ./bin/**
+
+functions:
+  api:
+    handler: bin/lambda
+    events:
+      - http:
+          path: /{proxy+}
+          method: ANY
+
+
+# release comment if you need.
+#custom:
+#  customDomain:
+#    domainName: "api.alpha.nearsfeed.com"
+#    basePath: ""
+#    hostedZoneId: ${ssm.ap-northeast-2:/nearsfeed/infra/aws_route_53/nearsfeed.com/zone_id~true}
+#    stage: ${self:provider.stage}
+#    createRoute53Record: true
+#    certificateName: ${ssm.ap-northeast-2:/nearsfeed/infra/aws_acm_certificate/nearsfeed.com/domain~true}
