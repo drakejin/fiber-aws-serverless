@@ -1,0 +1,26 @@
+version: "3.7"
+
+services:
+  myapp-dockermode:
+    container_name: myapp-dockermode
+    image: drakejin/myapp:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    entrypoint: "myapp http start"
+    ports:
+      - "3000:3000"
+    environment:
+      - IS_DOCKER=true
+    env_file: ./.env
+
+  service_db-dockermode:
+    container_name: service_db
+    image: mysql:8.0.23
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=sample
+      - MYSQL_USER=fiber
+      - MYSQL_PASSWORD=awesome_fiber
+      - MYSQL_ROOT_PASSWORD=awesome_fiber

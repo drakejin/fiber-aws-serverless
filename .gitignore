@@ -4,6 +4,7 @@ out
 
 # environments
 .env
+.env.origin
 .envrc
 
 # serverless

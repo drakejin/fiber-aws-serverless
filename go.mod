@@ -3,6 +3,8 @@ module github.com/drakejin/fiber-aws-serverless
 go 1.14
 
 require (
+	github.com/aws/aws-lambda-go v1.22.0
+	github.com/awslabs/aws-lambda-go-api-proxy v0.9.0
 	github.com/go-gormigrate/gormigrate/v2 v2.0.0
 	github.com/go-playground/validator/v10 v10.3.0
 	github.com/gofiber/fiber/v2 v2.5.0

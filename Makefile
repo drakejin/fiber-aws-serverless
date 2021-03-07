@@ -1,5 +1,10 @@
 .PHONY: docs deploy
 
+init:
+	docker-compose up --build -d
+	go run main.go gorm init
+	docker-compose restart
+
 docs:
 	python3 ./docs/aws_diagram.py
 

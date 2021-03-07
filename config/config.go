@@ -25,7 +25,6 @@ type Config struct {
 	Env        string
 	Debug      bool
 	Release    string
-	Serverless bool
 
 	HTTPServer *Server
 	ServiceDB  *DB
@@ -33,23 +32,22 @@ type Config struct {
 
 var Release = ""
 
-func New(isServerless bool) (*Config, error) {
-	if isServerless {
-		viper.AutomaticEnv()
-	} else {
+func New(useDotenv bool) (*Config, error) {
+	if useDotenv {
 		viper.AddConfigPath(".")
 		viper.SetConfigFile(".env")
 		err := viper.ReadInConfig()
 		if err != nil {
 			return nil, err
 		}
+	} else {
+		viper.AutomaticEnv()
 	}
 
 	return &Config{
 		App:        viper.GetString("FIBER_APP_APP"),
 		Env:        viper.GetString("FIBER_APP_ENV"),
 		Debug:      viper.GetBool("FIBER_APP_DEBUG"),
-		Serverless: isServerless,
 		Release:    Release,
 
 		HTTPServer: &Server{

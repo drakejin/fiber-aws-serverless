@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"fmt"
 	"net"
 
 	"github.com/spf13/cobra"
@@ -65,7 +66,7 @@ func GORMCommand(cfg *config.Config) *cobra.Command {
 		Use:     "init",
 		Aliases: []string{"i"},
 		RunE: func(cmd *cobra.Command, _ []string) error {
-
+			fmt.Println(cfg)
 			if err := db.Clean(cfg.Env, cfg.ServiceDB); err != nil {
 				if cfg.Env != _const.EnvAlpha {
 					return err

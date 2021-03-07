@@ -71,8 +71,8 @@ func New(cfg *config.Config) (*Client, error) {
 	sqlDB.SetConnMaxLifetime(time.Second)
 
 	return &Client{
-		DB:       db,
-		config:   cfg,
+		DB:     db,
+		config: cfg,
 	}, nil
 }
 
@@ -89,7 +89,6 @@ func (c *Client) InitMigrator() error {
 	c.Migrator = migrator
 	return c.Migrator.Migrate()
 }
-
 
 func Initialize(cfg *config.DB) error {
 	dsn := fmt.Sprintf(

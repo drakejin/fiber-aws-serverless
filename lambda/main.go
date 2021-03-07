@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	cfg, err := config.New(true)
+	cfg, err := config.New(false)
 	if err != nil {
 		log.Error().Err(err).Send()
 		log.Fatal().Err(err).Send()

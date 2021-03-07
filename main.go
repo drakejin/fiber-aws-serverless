@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/rs/zerolog/log"
 
 	"github.com/drakejin/fiber-aws-serverless/cmd"
@@ -8,8 +10,12 @@ import (
 )
 
 func main() {
-	var isServerless = false
-	cfg, err := config.New(isServerless)
+	var useDotenv = true
+	if os.Getenv("IS_DOCKER") == "true" {
+		useDotenv = false
+	}
+
+	cfg, err := config.New(useDotenv)
 	if err != nil {
 		log.Fatal().Err(err).Send()
 	}

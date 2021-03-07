@@ -1,8 +1,7 @@
 frameworkVersion: "2"
 
 plugins:
-#  - serverless-domain-manager
-  - serverless-dotenv-plugin
+  - serverless-dotenv-plugin # can read .env without settings
 
 org: gofiber
 service: fiber-aws-serverless
@@ -18,7 +17,6 @@ provider:
     shouldStartNameWithService: true
   logs:
     http: true
-  useDotenv: true
   environment:
     FIBER_APP_APP: ${env.FIBER_APP_APP}
     FIBER_APP_ENV: ${env.FIBER_APP_ENV}
@@ -80,14 +78,3 @@ functions:
       - http:
           path: /{proxy+}
           method: ANY
-
-
-# release comment if you need.
-#custom:
-#  customDomain:
-#    domainName: "api.alpha.nearsfeed.com"
-#    basePath: ""
-#    hostedZoneId: ${ssm.ap-northeast-2:/nearsfeed/infra/aws_route_53/nearsfeed.com/zone_id~true}
-#    stage: ${self:provider.stage}
-#    createRoute53Record: true
-#    certificateName: ${ssm.ap-northeast-2:/nearsfeed/infra/aws_acm_certificate/nearsfeed.com/domain~true}

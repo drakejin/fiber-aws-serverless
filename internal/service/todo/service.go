@@ -89,7 +89,7 @@ func (s *Service) Update(id string, todo *model.Todo) (*model.Todo, error) {
 		}
 		return nil
 	}, &sql.TxOptions{
-		ReadOnly:  false,
+		ReadOnly: false,
 	})
 
 	if err != nil {
@@ -117,7 +117,7 @@ func (s *Service) Delete(id string) (*model.Todo, error) {
 
 		return nil
 	}, &sql.TxOptions{
-		ReadOnly:  false,
+		ReadOnly: false,
 	})
 
 	if err != nil {
